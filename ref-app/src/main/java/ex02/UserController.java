@@ -17,4 +17,9 @@ public class UserController {
     public void logout() {
         System.out.println("logout 호출됨");
     }
+
+    @RequestMapping("/delete")
+    public void delete() {
+        System.out.println("delete 호출됨");
+    }
 }

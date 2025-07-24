@@ -13,7 +13,6 @@ public class App {
 
         Method[] methods = UserController.class.getDeclaredMethods();
 
-
         UserController uc = new UserController();
         for (Method method : methods) {
             Annotation anno = method.getDeclaredAnnotation(RequestMapping.class);
