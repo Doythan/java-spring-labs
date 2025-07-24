@@ -1,0 +1,67 @@
+# -------------------------------
+# Java & IDE
+# -------------------------------
+*.class
+*.log
+*.jar
+*.war
+*.ear
+
+# 컴파일된 파일
+target/
+bin/
+out/
+
+# IDE 설정 파일 (IntelliJ, Eclipse 등)
+*.iml
+.idea/
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+
+# -------------------------------
+# OS
+# -------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------
+# Build
+# -------------------------------
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# -------------------------------
+# Logs
+# -------------------------------
+*.log
+logs/
+*.tmp
+
+# -------------------------------
+# Environment / Config
+# -------------------------------
+.env
+.env.*
+application-*.yml
+application-*.yaml
+application-*.properties
+
+# -------------------------------
+# Test Reports
+# -------------------------------
+test-output/
+coverage/
+jacoco.exec
+
+# -------------------------------
+# 기타 (임시 파일)
+# -------------------------------
+*.swp
+*.swo
+*.bak
+*.tmp
