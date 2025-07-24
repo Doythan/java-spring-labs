@@ -20,6 +20,7 @@ public class SecurityConfig {
 
         http.formLogin(form -> form
                 .loginPage("/login-form")
+                .usernameParameter("email")
                 .loginProcessingUrl("/login")  // username=ssar&password=1234
                 .defaultSuccessUrl("/main")
         );
