@@ -16,18 +16,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // H2 Consle은 ifrmae으로 동작하도록, 이 설정이 필요.
+        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
+
         http.csrf(configure -> configure.disable());
 
         http.formLogin(form -> form
                 .loginPage("/login-form")
-                .usernameParameter("email")
+                .usernameParameter("username")
                 .loginProcessingUrl("/login")  // username=ssar&password=1234
                 .defaultSuccessUrl("/main")
         );
 
         http.authorizeHttpRequests(
                 authorize -> authorize
-                        .requestMatchers("/user/**", "/main").authenticated()
+                        .requestMatchers("/main").authenticated()
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
         );
 
