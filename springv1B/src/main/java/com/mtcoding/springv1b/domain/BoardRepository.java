@@ -1,5 +1,6 @@
 package com.mtcoding.springv1b.domain;
 
+import com.mtcoding.springv1b.controller.dto.BoardUpdateRequestDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,27 @@ import java.util.List;
 @Repository
 public class BoardRepository {
     private final EntityManager em;
+
+    public void deleteById(int id) {
+        Query query = em.createNativeQuery("delete from board_tb where id = ?");
+        query.setParameter(1, id);
+        query.executeUpdate();
+    }
+
+    public void updateById(int id, String title, String content) {
+        Query query = em.createNativeQuery("update board_tb set title = ?, content = ? where id = ?");
+        query.setParameter(1, title);
+        query.setParameter(2, content);
+        query.setParameter(3, id);
+        query.executeUpdate();  // insert, delete, update 시에 사용
+    }
+
+    public void save(String title, String content) {
+        Query query = em.createNativeQuery("insert into board_tb(title, content) values(?, ?)");
+        query.setParameter(1, title);
+        query.setParameter(2, content);
+        query.executeUpdate();  // insert, delete, update 시에 사용
+    }
 
     public List<Board> findAll() {
         Query query = em.createNativeQuery("SELECT id, title, content FROM board_tb order by id desc");

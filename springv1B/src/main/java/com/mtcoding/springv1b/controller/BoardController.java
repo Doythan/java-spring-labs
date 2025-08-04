@@ -4,35 +4,31 @@ import com.mtcoding.springv1b.controller.dto.BoardDetailResponseDTO;
 import com.mtcoding.springv1b.controller.dto.BoardListResponseDTO;
 import com.mtcoding.springv1b.controller.dto.BoardSaveRequestDTO;
 import com.mtcoding.springv1b.controller.dto.BoardUpdateRequestDTO;
+import com.mtcoding.springv1b.domain.BoardService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
 public class BoardController {
+
+    private final BoardService boardService;
+
 
     @GetMapping("/board")
     public String list(HttpServletRequest request) {
 
-        List<BoardListResponseDTO> resDTO = new ArrayList<>();
-        BoardListResponseDTO boardlist1 = new BoardListResponseDTO();
-        BoardListResponseDTO boardlist2 = new BoardListResponseDTO();
-        BoardListResponseDTO boardlist3 = new BoardListResponseDTO();
-        boardlist1.setId(1);
-        boardlist1.setTitle("1번 제목");
-        boardlist2.setId(2);
-        boardlist2.setTitle("2번 제목");
-        boardlist3.setId(3);
-        boardlist3.setTitle("3번 제목");
-        resDTO.add(boardlist1);
-        resDTO.add(boardlist2);
-        resDTO.add(boardlist3);
-        request.setAttribute("models", resDTO);
+        List<BoardListResponseDTO> respDTO = boardService.게시글목록();
+
+        request.setAttribute("models", respDTO);
 
         return "board/list";
     }
@@ -40,11 +36,9 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String detail(@PathVariable("id") int id, HttpServletRequest request) {
 
-        BoardDetailResponseDTO resDTO = new BoardDetailResponseDTO();
-        resDTO.setId(id);
-        resDTO.setTitle("제목"+id);
-        resDTO.setContent("내용"+id);
-        request.setAttribute("model", resDTO);
+        BoardDetailResponseDTO respDTO = boardService.게시글상세(id);
+
+        request.setAttribute("model", respDTO);
 
         return "board/detail";
     }
@@ -74,6 +68,10 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    // selete * from board_tb where title = '스프링; 주소를 보면 쿼리가 보여야함
+    // localhost:8080/board?title=스프링 -> String으로 받으면 된다 ? , 쿼리스트림
+    // selete * from board_tb where id = 1;
+    // localhost:8080/board/1 -> PathValue
     @PostMapping("/board/{id}/update")
     public String updateById(BoardUpdateRequestDTO reqDTO, @PathVariable("id") int id) {
         return "redirect:/board/" + id;

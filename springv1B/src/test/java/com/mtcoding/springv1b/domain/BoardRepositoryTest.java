@@ -15,6 +15,58 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
+    public void deleteById_test() {
+        // give
+        int id = 1;
+
+        // when
+        boardRepository.deleteById(id);
+
+        // eye
+        // 검증 없어졌는지 전체를 확인
+        List<Board> boardList = boardRepository.findAll();
+        for (Board board : boardList) {
+            System.out.println(board.getId());
+            System.out.println(board.getTitle());
+            System.out.println(board.getContent());
+        }
+        // 사이즈가 하나 줄었는지만 확인
+        System.out.println(boardList.size());
+    }
+
+    @Test
+    public void updateById_test() {
+        // give
+        int id = 1;
+        String title = "제목1 수정완료";
+        String content = "내용1 수정완료";
+
+        // when
+        boardRepository.updateById(id, title, content);
+
+        // eye
+        Board findBoard = boardRepository.findById(1);
+        System.out.println(findBoard.getId());
+        System.out.println(findBoard.getTitle());
+        System.out.println(findBoard.getContent());
+    }
+
+    @Test
+    public void save_test() {
+        // given
+        String title = "제목6";
+        String content = "내용";
+
+        // when
+        boardRepository.save(title, content);
+
+        // eye
+        Board findBoard = boardRepository.findById(6);
+        System.out.println(findBoard.getTitle());
+        System.out.println(findBoard.getContent());
+    }
+
+    @Test
     public void findAll_test() {
         // given
         // when
