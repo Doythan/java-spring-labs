@@ -108,7 +108,7 @@ public class BoardRepositoryTest {
     @Test
     public void deleteById_test() {
         // give
-        int id = 1;
+        int id = 0;
 
         // when
         boardRepository.deleteById(id);

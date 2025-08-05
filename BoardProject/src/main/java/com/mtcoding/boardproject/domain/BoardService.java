@@ -49,19 +49,19 @@ public class BoardService {
         return resDTO;
     }
 
+    @Transactional
     public void 게시글쓰기(BoardSaveRequestDTO reqDTO) {
-        boardRepository.save(reqDTO.getTitle(),  reqDTO.getContent());
+        boardRepository.save(reqDTO.getTitle(), reqDTO.getContent());
     }
 
     @Transactional
     public void 게시글삭제(int id) {
-        int rows = boardRepository.deleteById(id);
+        boardRepository.deleteById(id);
     }
 
-    @Transactional // ★ 업데이트/삭제는 꼭 트랜잭션
-    public boolean 게시글수정(int id, BoardUpdateRequestDTO reqDTO) {
-        int rows = boardRepository.update(id, reqDTO.getTitle(), reqDTO.getContent());
-        return rows == 1; // 존재하지 않으면 0
+    @Transactional // 업데이트/삭제는 꼭 트랜잭션
+    public void 게시글수정(int id, BoardUpdateRequestDTO reqDTO) {
+        boardRepository.update(id, reqDTO.getTitle(), reqDTO.getContent());
     }
 }
 
